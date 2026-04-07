@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Copy, Check, Zap, ChevronRight, ArrowRight } from 'lucide-react';
+import { ExternalLink, Copy, Check, Zap, ChevronRight, ArrowRight, Link2, Wand2 } from 'lucide-react';
 import { encodeUrl, getPlatformInfo } from '../utils/deepLinkHelper';
 import { QRCodeSVG } from 'qrcode.react';
+import { supabase } from '../lib/supabase';
+import { generateSlug, validateSlug } from '../utils/slugGenerator';
 
 /* fade-up animation variant */
 const fadeUp = {
@@ -21,11 +23,16 @@ const APPS = [
 
 export default function Home() {
   const [url, setUrl]                 = useState('');
+  const [customSlug, setCustomSlug]   = useState('');
   const [generatedLink, setGenerated] = useState('');
+  const [shortLink, setShortLink]     = useState('');
   const [copied, setCopied]           = useState(false);
   const [error, setError]             = useState('');
+  const [slugError, setSlugError]     = useState('');
   const [platform, setPlatform]       = useState(null);
   const [navScrolled, setNavScrolled] = useState(false);
+  const [saving, setSaving]           = useState(false);
+  const [useDb, setUseDb]             = useState(!!supabase);
 
   // (scroll reveal handled by framer-motion whileInView)
 
@@ -35,19 +42,64 @@ export default function Home() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleGenerate = (e) => {
+  const handleGenerate = async (e) => {
     e.preventDefault();
     setError('');
+    setSlugError('');
     if (!url.trim()) { setError('Please paste a URL to continue.'); return; }
+
+    let parsedUrl;
     try {
-      new URL(url);
-      const info = getPlatformInfo(url);
-      setPlatform(info);
-      setGenerated(`${window.location.origin}/open?target=${encodeUrl(url)}`);
-      setCopied(false);
+      parsedUrl = new URL(url);
     } catch {
-      setError('Invalid URL — make sure to include https://');
+      setError('Invalid URL — make sure to include https://'); return;
     }
+
+    const info = getPlatformInfo(url);
+    setPlatform(info);
+
+    // Validate custom slug if provided
+    if (customSlug.trim()) {
+      const { valid, error: slugErr } = validateSlug(customSlug.trim());
+      if (!valid) { setSlugError(slugErr); return; }
+    }
+
+    const slug = customSlug.trim() || generateSlug();
+
+    setSaving(true);
+
+    // Save to Supabase if configured
+    if (supabase) {
+      const { error: dbErr } = await supabase
+        .from('links')
+        .insert({ slug, original_url: url });
+
+      if (dbErr) {
+        setSaving(false);
+        if (dbErr.code === '23505') {
+          setSlugError(
+            customSlug.trim()
+              ? `"${slug}" is already taken. Choose a different slug.`
+              : 'Slug collision — please try again.'
+          );
+        } else {
+          setError('Failed to save link. Check your Supabase configuration.');
+        }
+        return;
+      }
+
+      const origin = window.location.origin;
+      const short  = `${origin}/${slug}`;
+      setShortLink(short);
+      setGenerated(short);
+    } else {
+      // Fallback: use base64 encoding (no DB)
+      setShortLink('');
+      setGenerated(`${window.location.origin}/open?target=${encodeUrl(url)}`);
+    }
+
+    setSaving(false);
+    setCopied(false);
   };
 
   const handleCopy = () => {
@@ -114,10 +166,36 @@ export default function Home() {
                 value={url}
                 onChange={e => setUrl(e.target.value)}
               />
-              <button type="submit" className="btn btn-indigo btn-lg">
-                <Zap size={16} /> Generate
+              <button type="submit" className="btn btn-indigo btn-lg" disabled={saving}>
+                {saving ? <span style={{display:'flex',gap:'6px',alignItems:'center'}}><div style={{width:'14px',height:'14px',border:'2px solid rgba(255,255,255,0.3)',borderTopColor:'#fff',borderRadius:'50%',animation:'spin 0.7s linear infinite'}}></div> Saving…</span> : <><Zap size={16} /> Generate</>}
               </button>
             </div>
+
+            {/* Custom slug row */}
+            <div style={{ display:'flex', alignItems:'center', gap:'10px', marginTop:'10px', maxWidth:'600px', margin:'10px auto 0' }}>
+              <div style={{ flex:1, display:'flex', alignItems:'center', gap:'8px', background:'rgba(255,255,255,0.04)', border:'1px solid var(--border-bright)', borderRadius:'var(--r-md)', padding:'10px 14px' }}>
+                <span style={{ color:'var(--text-subtle)', fontSize:'0.875rem', whiteSpace:'nowrap' }}>{window.location.host}/</span>
+                <input
+                  type="text"
+                  className="hero-input"
+                  style={{ padding:'0', fontSize:'0.875rem' }}
+                  placeholder="custom-slug  (optional)"
+                  value={customSlug}
+                  onChange={e => setCustomSlug(e.target.value.toLowerCase().replace(/\s/g, '-'))}
+                />
+              </div>
+              <button type="button" className="btn btn-ghost" style={{ padding:'10px 14px', fontSize:'0.8rem' }}
+                title="Generate a random slug"
+                onClick={() => setCustomSlug(generateSlug())}>
+                <Wand2 size={14}/> Random
+              </button>
+            </div>
+            {slugError && <p className="hero-error">{slugError}</p>}
+            {!supabase && (
+              <p style={{ textAlign:'center', fontSize:'0.775rem', color:'var(--text-subtle)', marginTop:'8px' }}>
+                ⚠️ Supabase not configured — using long links. Add env vars to enable short links.
+              </p>
+            )}
           </form>
 
           {error && <p className="hero-error">{error}</p>}
@@ -137,7 +215,7 @@ export default function Home() {
                       {platform ? `${platform.name} detected` : 'Link ready'}
                     </div>
                     <span style={{ marginLeft: 'auto', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                      Magic Link Generated
+                      {shortLink ? '🔗 Short link created' : 'Magic Link Generated'}
                     </span>
                   </div>
 

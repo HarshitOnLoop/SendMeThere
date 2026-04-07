@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@supabase/supabase-js": "^2.102.1",
     "base-64": "^1.0.0",
     "framer-motion": "^12.38.0",
     "lucide-react": "^0.563.0",
+    "nanoid": "^5.1.7",
     "qrcode.react": "^4.2.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

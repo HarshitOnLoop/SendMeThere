@@ -1,23 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Copy, Check, Zap, ChevronRight, ArrowRight } from 'lucide-react';
 import { encodeUrl, getPlatformInfo } from '../utils/deepLinkHelper';
 import { QRCodeSVG } from 'qrcode.react';
 
-/* ── scroll reveal hook ── */
-function useReveal() {
-  const ref = useRef(null);
-  useEffect(() => {
-    if (!ref.current) return;
-    const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { e.target.classList.add('visible'); io.disconnect(); } },
-      { threshold: 0.12 }
-    );
-    io.observe(ref.current);
-    return () => io.disconnect();
-  }, []);
-  return ref;
-}
+/* fade-up animation variant */
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+};
 
 const APPS = [
   { icon: '🎬', name: 'YouTube', desc: 'Videos & Shorts',   color: '#ff4444' },
@@ -36,11 +27,7 @@ export default function Home() {
   const [platform, setPlatform]       = useState(null);
   const [navScrolled, setNavScrolled] = useState(false);
 
-  const howRef   = useReveal();
-  const appsRef  = useReveal();
-  const featRef  = useReveal();
-  const statsRef = useReveal();
-  const ctaRef   = useReveal();
+  // (scroll reveal handled by framer-motion whileInView)
 
   useEffect(() => {
     const onScroll = () => setNavScrolled(window.scrollY > 20);
@@ -206,11 +193,12 @@ export default function Home() {
       {/* ══ HOW IT WORKS ══ */}
       <section className="section" id="how">
         <div className="container">
-          <div className="section-header reveal" ref={howRef}>
+          <motion.div className="section-header"
+            variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <div className="section-eyebrow">How it works</div>
             <h2 className="section-title">Three steps to a better link.</h2>
             <p className="section-sub">No account needed. No SDK. No code. Just paste, generate, share.</p>
-          </div>
+          </motion.div>
 
           <div className="steps-grid">
             {[
@@ -232,7 +220,8 @@ export default function Home() {
       {/* ══ STATS ══ */}
       <section className="section stats-section">
         <div className="container">
-          <div className="stats-grid reveal" ref={statsRef}>
+          <motion.div className="stats-grid"
+            variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             {[
               { num: '6+',    label: 'Supported platforms' },
               { num: '< 1s',  label: 'Time to generate' },
@@ -243,18 +232,19 @@ export default function Home() {
                 <div className="stat-label">{s.label}</div>
               </div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ══ APPS ══ */}
       <section className="section apps-section" id="apps">
         <div className="container">
-          <div className="section-header reveal" ref={appsRef}>
+          <motion.div className="section-header"
+            variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <div className="section-eyebrow">Platforms</div>
             <h2 className="section-title">One tool, every app.</h2>
             <p className="section-sub">We support the biggest platforms and keep expanding the list weekly.</p>
-          </div>
+          </motion.div>
 
           <div className="apps-grid">
             {APPS.map((app, i) => (
@@ -277,11 +267,12 @@ export default function Home() {
       {/* ══ FEATURES BENTO ══ */}
       <section className="section" id="features">
         <div className="container">
-          <div className="section-header reveal" ref={featRef}>
+          <motion.div className="section-header"
+            variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <div className="section-eyebrow">Features</div>
             <h2 className="section-title">Everything you need.</h2>
             <p className="section-sub">Built for creators, marketers, and developers who refuse to settle for broken mobile experiences.</p>
-          </div>
+          </motion.div>
 
           <div className="bento-grid">
             {/* Big card */}
@@ -341,7 +332,7 @@ export default function Home() {
       <section className="cta-section">
         <div className="cta-bg"></div>
         <div className="container">
-          <motion.div className="cta-box reveal" ref={ctaRef}
+          <motion.div className="cta-box"
             initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
           >
             <div className="section-eyebrow" style={{ justifyContent:'center', marginBottom:'28px' }}>

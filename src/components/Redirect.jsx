@@ -21,6 +21,9 @@ export default function Redirect() {
 
     if (os === 'desktop') { window.location.href = generated.webUrl; return; }
 
+    // If no native app URL available, go straight to web URL
+    if (!generated.appUrl) { window.location.href = generated.webUrl; return; }
+
     setStatus('redirecting');
     window.location.href = generated.appUrl;
     const t = setTimeout(() => setStatus('failed'), 2500);

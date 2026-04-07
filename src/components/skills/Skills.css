@@ -1,0 +1,39 @@
+.what-we-do {
+    /* Change from var(--white-text) to this: */
+    background-color: #f4f4f0; 
+    
+    color: var(--dark-bg);
+    padding: 40px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-top: -90px;
+    height: auto; 
+    min-height: 100vh; 
+    padding-bottom: 100px;
+    
+    /* Add a subtle shadow to make it pop from the section above */
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
+}
+
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    
+    /* FIX 2: Rows adapt to content size instead of being fixed */
+    grid-auto-rows: minmax(100px, auto);
+    gap: 16px;
+}
+
+@media (max-width: 768px) {
+    .parent {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .what-we-do {
+        margin-top: -80px;
+        padding: 20px; /* Reduced padding for mobile */
+    }
+}

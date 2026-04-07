@@ -1,0 +1,198 @@
+/* ========================================= */
+/* IMPORTS                                   */
+/* ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Poppins:wght@600;900&display=swap');
+
+/* ========================================= */
+/* MAIN CARD (.div4)                         */
+/* ========================================= */
+.div4 {
+    grid-column: span 2 / span 2;
+grid-row: span 4 / span 4;  /* <-- Changed from 7 to 5 */    grid-column-start: 4;
+    grid-row-start: 1;
+    
+    background-color: #fcffef;
+    border-radius: 16px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Header */
+.skill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 30px 10px 30px;
+    border-bottom: 2px dashed #000;
+}
+
+.div4 h1 {
+    font-family: "Instrument Serif", serif;
+    font-size: 80px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1;
+    text-decoration: underline 3px solid black;
+    text-decoration-style: dashed;
+    text-underline-offset: 8px;
+}
+
+/* ========================================= */
+/* NEW: CATEGORY TABS                        */
+/* ========================================= */
+.category-tabs {
+    display: flex;
+    gap: 10px;
+    padding: 15px 30px;
+    overflow-x: auto; /* Scroll on mobile if needed */
+    scrollbar-width: none;
+}
+
+.tab-btn {
+    border: 2px solid #000;
+    background: transparent;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    background: #eee;
+}
+
+.tab-btn.active {
+    background: #000;
+    color: #fff;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+}
+
+/* ========================================= */
+/* SKILL ITEMS (Dynamic Bars)                */
+/* ========================================= */
+.skillsgrid {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 30px 30px 30px;
+    flex-grow: 1;
+}
+
+.sall {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 32px; /* Slightly smaller to fit more text */
+    padding: 12px 25px;
+    color: #fff;
+    
+    /* Card Shape */
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+    
+    /* Animation */
+    transition: transform 0.2s ease, padding 0.2s ease;
+    cursor: default;
+}
+
+.sall:hover {
+    transform: translateY(-8px);
+    padding-bottom: 20px; 
+}
+
+/* Last child usually needs rounded bottom corners if it's the bottom of stack */
+.sall:last-child {
+    border-radius: 16px;
+    padding-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* ========================================= */
+/* ROTATING BUTTON                           */
+/* ========================================= */
+.button {
+    cursor: pointer;
+    border: none;
+    background: #ff3232;
+    color: #fff;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    position: relative;
+    display: grid;
+    place-content: center;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.button:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: #000;
+}
+
+.button__text {
+    position: absolute;
+    inset: 0;
+    animation: text-rotation 10s linear infinite;
+    font-family: "Poppins", sans-serif;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.button__text > span {
+    position: absolute;
+    transform: rotate(calc(19deg * var(--index)));
+    inset: 6px;
+}
+
+.button__circle {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    background: #fff;
+    color: #ff2727;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.button__icon { width: 14px; }
+.button:hover .button__icon { color: #000; }
+
+@keyframes text-rotation { to { rotate: 360deg; } }
+
+/* ========================================= */
+/* RESPONSIVE (< 768px)                      */
+/* ========================================= */
+@media (max-width: 768px) {
+    .div4 {
+        grid-column: auto;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .div4 h1 { font-size: 50px; }
+
+    .skill { padding: 15px 20px; }
+    
+    .category-tabs { padding: 10px 20px; }
+    
+    .skillsgrid { padding: 10px 20px 30px 20px; }
+
+    .sall {
+        font-size: 24px;
+        padding: 10px 20px;
+    }
+
+    .button { width: 70px; height: 70px; }
+    .button__text { font-size: 8px; }
+}

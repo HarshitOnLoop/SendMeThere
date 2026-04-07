@@ -1,0 +1,496 @@
+/* === Google Fonts (import at top of CSS file) === */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+/* === Color Variables === */
+:root {
+  --dark-bg: #1A1A1A;
+  --yellow-accent: #FFC000;
+  --pink-accent: #FF577F;
+  --purple-accent: #8A2BE2;
+  --green-accent: #00FF99;
+  --white-text: #F5F5F5;
+}
+
+/* === Global Reset === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #ffd901;
+  background-image:
+    linear-gradient(to right, #ff9600 2px, transparent 1px),
+    linear-gradient(to bottom, #ff9600 2px, transparent 1px);
+  background-size: 30px 30px;
+  padding: 20px;
+}
+
+/* === Container === */
+.container {
+  background-color: var(--dark-bg); /* fallback */
+  background-image: url("wave_background.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  color: var(--white-text);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.hero-section {
+  padding: 80px 40px;
+  text-align: center;
+  position: relative;
+}
+
+/* 1. UPDATE YOUR H1 CSS */
+.hero-section h1 {
+  /* Your existing styles */
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+
+  /* Animation Styles */
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: h1-animate 1.2s ease-out forwards;
+  animation-delay: 0.3s; 
+
+  /* REQUIRED FOR ICONS: */
+  position: relative;    /* Creates the anchor point */
+  display: inline-block; /* Shrinks the box to fit the text exactly */
+}
+
+/* 2. SHARED ICON STYLES */
+.hero-section h1 .icon {
+  position: absolute;
+  display: block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: -1; /* Behind the text */
+}
+
+/* 3. GITHUB ICON (Top Left) */
+.hero-section h1 .github {
+  width: 100px;  
+  height: 100px;
+  background-image: url('github.png');
+  
+  top: -60px;  
+  left: -80px; 
+  
+  transform: rotate(-15deg);
+}
+
+.hero-section h1 .vscode {
+  width: 80px;   
+  height: 80px;
+  background-image: url('vscode.png');
+  
+  bottom: -10px; 
+  right: -100px;
+  
+  transform: rotate(10deg);
+}
+
+/* Define keyframes if you haven't already */
+@keyframes h1-animate {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* Animation keyframes */
+@keyframes h1-animate {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+
+.hero-section p {
+  font-family: "Instrument Serif", serif;
+  font-weight: 200;
+  max-width: 700px;
+  margin: 0 auto 40px;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+/* === Buttons === */
+.hero-section .make-request-btn,
+.delete-button {
+  background-color: var(--yellow-accent);
+  color: var(--dark-bg);
+  border: none;
+  padding: 15px 30px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+/* === Logos Row === */
+.logos-row {
+  margin-top: 20px;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logos-row img {
+  height: 110px;
+}
+.logos-row img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logos-row img:hover {
+    transform: scale(1.3);
+}
+
+
+/* From Uiverse.io by ahmed150up2 */ 
+.delete-button {
+  background-color: #000;
+    font-family: "Courier New", monospace; /* 👈 Example font */
+  color: #fff;
+  font-size: 24px;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 8px;
+  width: 300px;
+  height: 65px;
+  border-radius: 15px 15px 12px 12px;
+  cursor: pointer;
+  position: relative;
+  will-change: transform;
+  transition: all .1s ease-in-out 0s;
+  user-select: none;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  background-position: bottom right, bottom right;
+  background-size: 100% 100%, 100% 100%;
+  background-repeat: no-repeat;
+  box-shadow: inset -4px -10px 0px rgba(255, 255, 255, 0.4),
+    inset -4px -8px 0px rgba(0, 0, 0, 0.3),
+    0px 2px 1px rgba(0, 0, 0, 0.3),
+    0px 2px 1px rgba(255, 255, 255, 0.1);
+  transform: perspective(70px) rotateX(5deg) rotateY(0deg);
+}
+.delete-button .btn-text {
+  display: inline-block;
+  transform: translateY(-6px);    /* move text up by 6px; change value as needed */
+  line-height: 1;                 /* good for single-line buttons */
+}
+
+.delete-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.5));
+  z-index: -1;
+  border-radius: 15px;
+  box-shadow: inset 4px 0px 0px rgba(255, 255, 255, 0.1),
+    inset 4px -8px 0px rgba(0, 0, 0, 0.3);
+  transition: all .1s ease-in-out 0s;
+}
+
+.delete-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  background-position: bottom right, bottom right;
+  background-size: 100% 100%, 100% 100%;
+  background-repeat: no-repeat;
+  z-index: -1;
+  border-radius: 15px;
+  transition: all .1s ease-in-out 0s;
+}
+
+.delete-button:active {
+  will-change: transform;
+  transform: perspective(80px) rotateX(5deg) rotateY(1deg) translateY(3px) scale(0.96);
+  height: 64px;
+  border: 0.25px solid rgba(0, 0, 0, 0.2);
+  box-shadow: inset -4px -8px 0px rgba(255, 255, 255, 0.2),
+    inset -4px -6px 0px rgba(0, 0, 0, 0.8),
+    0px 1px 0px rgba(0, 0, 0, 0.9),
+    0px 1px 0px rgba(255, 255, 255, 0.2);
+  transition: all .1s ease-in-out 0s;
+}
+
+.delete-button::after:active {
+  background-image: linear-gradient(to bottom,rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2));
+}
+
+.delete-button:active::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 5%;
+  left: 20%;
+  width: 50%;
+  height: 80%;
+  background-color: rgba(255, 255, 255, 0.1);
+  animation: overlay 0.1s ease-in-out 0s;
+  pointer-events: none;
+}
+
+@keyframes overlay {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.delete-button:focus {
+  outline: none;
+}
+
+/* Popup Contact Form Styles */
+.popupContact_container {
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    
+    /* Flex for centering */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 100;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+}
+
+/* Popup box */
+.popupContact_content {
+    background: #DDEEFF;
+    border: 2px solid #0A1F44;
+    border-radius: 20px;
+    box-shadow: 3px 4px 0px 1px #000;
+    padding: 25px 40px;
+    text-align: center;
+
+    /* Box shape and size */
+    width: 370px;  /* adjust as needed */
+    max-width: 60%; /* responsive for smaller screens */
+    position: relative;
+}
+
+    .popupContact_title {
+      color: #0A1F44;
+      font-size: 1.6em;
+      margin-bottom: 15px;
+font-family: "Instrument Serif", serif;
+font-weight: 900;
+    }
+
+    .popupContact_formGroup {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin: 10px 0;
+    }
+
+    .popupContact_input {
+      outline: none;
+      border: 2px solid #0A1F44;
+      box-shadow: 3px 4px 0px 1px #000;
+      width: 280px;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    .popupContact_input:focus {
+      transform: translateY(4px);
+      box-shadow: 1px 2px 0px 0px #000;
+    }
+
+    .popupContact_btn {
+      padding: 12px;
+      margin-top: 15px;
+      width: 100%;
+      font-size: 15px;
+      background: #007bff;
+      border-radius: 10px;
+      font-weight: 800;
+      color: #fff;
+      border: none;
+      box-shadow: 3px 3px 0px 0px #000;
+      cursor: pointer;
+    }
+
+    .popupContact_btn:hover {
+      background: #0056b3;
+    }
+
+    /* Close button */
+    .popupContact_closeBtn {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #0A1F44;
+      cursor: pointer;
+    }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .popupContact_content {
+        padding: 20px;     /* smaller padding */
+        max-width: 90%;   /* remove desktop max-width */
+    }
+
+    .popupContact_title {
+        font-size: 1.4em;  /* slightly smaller title */
+    }
+
+    .popupContact_input {
+        width: 100%;       /* input takes full width */
+        font-size: 13px;   /* smaller text */
+        padding: 8px;
+    }
+
+    .popupContact_btn {
+        font-size: 14px;   /* smaller button text */
+        padding: 10px;
+    }
+
+    .popupContact_closeBtn {
+        font-size: 18px;
+        top: 8px;
+        right: 12px;
+    }
+
+    .popupContact_formGroup {
+        margin: 8px 0;
+    }
+}
+
+@media (max-width: 992px) {
+  .hero-section {
+    padding: 60px 30px;
+  }
+
+  .hero-section h1 {
+    font-size: 40px;
+  }
+
+  .hero-section p {
+    font-size: 18px;
+    max-width: 600px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 50px 20px;
+  }
+
+  .hero-section h1 {
+    margin-top: -5px;
+    font-size: 28px;
+  }
+
+  .hero-section p {
+    font-size: 17px;
+    line-height: 1.4;
+    margin-top: 4px;
+    font-weight: 200;
+    max-width: 100%;
+  }
+
+.logos-row {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logos-row img {
+  height: 80px;
+}
+.logos-row img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logos-row img:hover {
+    transform: scale(1.2);
+}
+
+
+}
+
+@media (max-width: 500px) {
+
+
+
+.hero-section h1 .github {
+  width: 60px;  
+  height: 60px;
+  background-image: url('github.png');
+  
+  top: -30px;  
+  left: -20px; 
+  
+  transform: rotate(-15deg);
+}
+
+.hero-section h1 .vscode {
+  width: 40px;   
+  height: 40px;
+  background-image: url('vscode.png');
+  
+  bottom: -20px; 
+  right: -40px;
+  
+  transform: rotate(10deg);
+}
+}

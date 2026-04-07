@@ -1,0 +1,304 @@
+/* =========================================
+   1. SCOPED VARIABLES & CONTAINER
+   ========================================= */
+
+.prj-section {
+  /* Scoped Variables (won't affect other components) */
+  --prj-card-bg: #272727;
+  --prj-text-primary: #f8fafc;
+  --prj-text-secondary: #94a3b8;
+  --prj-accent-color: #ffffff;
+  --prj-accent-hover: #939393;
+  --prj-border-color: #334155;
+  --prj-paper-dark: #ffdd00;
+  --prj-paper-light: #ffdd00;
+  --prj-pin-color: #d02627;
+  --prj-pin-dark: #9e0608;
+  --prj-pin-light: #fc7e7d;
+
+  position: relative;
+  margin-top: -16px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  
+  /* Green Grid BG */
+  background-color: #01943B; 
+  background-image:
+      repeating-linear-gradient(
+          0deg, rgba(255,255,255,0.2), rgba(255,255,255,0.2) 1px, transparent 1px, transparent 40px
+      ),
+      repeating-linear-gradient(
+          90deg, rgba(255,255,255,0.2), rgba(255,255,255,0.2) 1px, transparent 1px, transparent 40px
+      );
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* =========================================
+   2. HEADER & BACKGROUND ELEMENTS
+   ========================================= */
+
+/* Laptop Image */
+.prj-laptop-img {
+    position: absolute;
+    top: -290px;
+    right: -140px;
+    width: 600px;
+    transform: rotate(-18deg);
+    z-index: 10;
+}
+
+.prj-header-wrapper { 
+    margin-bottom: 40px; 
+}
+
+/* Paper Note */
+.prj-paper-note {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 80px;
+  width: 700px;
+  height: 150px;
+  background: linear-gradient(135deg, var(--prj-paper-dark) 30%, var(--prj-paper-light));
+  transform: rotate(4deg);
+  transform-origin: top left;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.prj-main-title {
+  font-family: "Permanent Marker", cursive;
+  font-weight: 100;
+  color: rgb(0, 0, 0);
+  text-transform: uppercase;
+  font-size: 110px;
+  margin: 0;
+}
+
+/* Pin Assembly */
+.prj-pin-assembly {
+  position: absolute;
+  left: 20px;
+  width: 60px;
+  height: 50px;
+}
+
+.prj-pin-shadow {
+  position: absolute;
+  top: 18px;
+  left: -8px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: radial-gradient(rgba(0,0,0,0.2), 20%, rgba(201, 191, 141, 0));
+}
+
+.prj-pin-metal {
+  position: absolute;
+  width: 5px;
+  height: 20px;
+  background: linear-gradient(to right, #808080, 40%, #eae8e8, 50%, #808080);
+  border-radius: 0 0 30% 30%;
+  transform: rotate(50deg);
+  transform-origin: bottom left;
+  top: 15px;
+  border-bottom: 1px solid #808080;
+}
+
+.prj-pin-head {
+  position: absolute;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: var(--prj-pin-color);
+  background: radial-gradient(circle at bottom right, var(--prj-pin-light), 25%, var(--prj-pin-dark), 90%, var(--prj-pin-color));
+}
+
+.prj-pin-head::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -2px;
+  width: 20px;
+  height: 30px;
+  transform: rotate(55deg);
+  transform-origin: 100% 100%;
+  border-radius: 0 0 40% 40%;
+  background: linear-gradient(to right, var(--prj-pin-dark), 30%, var(--prj-pin-color), 90%, var(--prj-pin-light));
+}
+
+.prj-pin-head::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: -5px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: radial-gradient(circle at right, var(--prj-pin-light), 30%, var(--prj-pin-color), var(--prj-pin-dark) 80%);
+}
+
+.prj-spacer { height: 50px; }
+
+
+/* =========================================
+   3. CARD GRID & STYLING
+   ========================================= */
+
+.prj-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.prj-card {
+  background-color: var(--prj-card-bg);
+  border: 1px solid var(--prj-border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.prj-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border-color: black;
+}
+
+/* Image Area */
+.prj-card-img-wrapper {
+  width: 100%;
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--prj-border-color);
+}
+
+.prj-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.prj-card:hover .prj-card-img {
+  transform: scale(1.05);
+}
+
+/* Content Area */
+.prj-card-content {
+  padding: 25px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.prj-card-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--prj-text-primary);
+  margin-bottom: 10px;
+    font-family: 'Poppins', sans-serif;
+
+  margin-top: 0;
+}
+
+.prj-card-subtitle {
+  font-family: 'JetBrains Mono', monospace; 
+  font-size: 0.75rem; 
+  color: var(--prj-accent-color);
+  font-weight: 500;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px; /* Spaced out for a premium look */
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.prj-card-desc {
+  /* Modern Standard: Inter is the cleanest font for UI text */
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--prj-text-secondary);
+  line-height: 1.7; /* Increased line-height improves readability */
+  margin-bottom: 25px;
+  flex-grow: 1;
+  font-weight: 400;
+  opacity: 0.9; /* Slightly softens the white text */
+}
+
+.prj-card-footer {
+  display: flex;
+  gap: 15px;
+  margin-top: auto;
+  
+}
+
+.prj-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.2s ease;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prj-btn-primary {
+  background-color: var(--prj-accent-color);
+  color: #0f172a;
+  border: 1px solid var(--prj-accent-color);
+}
+
+.prj-btn-primary:hover {
+  background-color: var(--prj-accent-hover);
+  border-color: var(--prj-accent-hover);
+}
+
+.prj-btn-outline {
+  background-color: transparent;
+  color: var(--prj-text-primary);
+  border: 1px solid var(--prj-border-color);
+}
+
+.prj-btn-outline:hover {
+  border-color: var(--prj-text-primary);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* =========================================
+   4. RESPONSIVE FIXES
+   ========================================= */
+@media screen and (max-width: 768px) {
+  .prj-laptop-img { 
+    width: 270px; top: -138px; right: -120px;
+    transform: rotate(-12deg);
+  }
+  .prj-paper-note { 
+    width: 250px; height: 60px; padding-left: 70px; transform: rotate(2deg);
+  }
+  .prj-main-title { font-size: 28px; }
+
+  .prj-grid-container {
+    grid-template-columns: 1fr;
+    padding: 20px 10px;
+    gap: 30px;
+  }
+  
+  .prj-card {
+    max-width: 100%;
+  }
+}

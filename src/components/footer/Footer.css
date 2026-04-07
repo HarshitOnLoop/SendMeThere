@@ -1,0 +1,19 @@
+.footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #000;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    padding: 8px 15px;       /* smaller padding for mobile */
+    font-size: 14px;          /* adjust font-size for smaller screens */
+    border-top-left-radius: 25px;  /* smaller curves for mobile */
+    border-top-right-radius: 25px;
+  }
+}
